@@ -3,7 +3,7 @@
 use Cli\Application;
 use Cli\Loader;
 
-require('./library/Loader.php');
+require './library/Loader.php';
 
 try {
     Loader::register(

@@ -172,8 +172,8 @@ class TestController extends BaseController
     public function cursorTest(int $sleepTimer = 3): void
     {
         $commands = [
-            'Cursor stop blinking' => Cursor::STOP_BLINK,
-            'Cursor start blinking' => Cursor::START_BLINK,
+            'Cursor stop blinking' => Cursor::NOBLINK,
+            'Cursor start blinking' => Cursor::BLINK,
             'Cursor hide' => Cursor::HIDE,
             'Cursor show' => Cursor::SHOW,
             'Cursor underline' => Cursor::UNDERLINE,

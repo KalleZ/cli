@@ -6,8 +6,8 @@ namespace Cli;
 
 enum Cursor
 {
-    case STOP_BLINK;
-    case START_BLINK;
+    case NOBLINK;
+    case BLINK;
     case HIDE;
     case SHOW;
     case UNDERLINE;
@@ -17,8 +17,8 @@ enum Cursor
     public function sequence(): string
     {
         return match ($this) {
-            self::STOP_BLINK => "\033[?12l",
-            self::START_BLINK => "\033[?12h",
+            self::NOBLINK => "\033[?12l",
+            self::BLINK => "\033[?12h",
             self::HIDE => "\033[?25l",
             self::SHOW => "\033[?25h",
             self::UNDERLINE => "\033[4 q",
