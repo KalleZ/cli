@@ -1,0 +1,6 @@
+{
+    "controllers": [
+        "\\Cli\\Controllers\\HelpController",
+        "\\Cli\\Controllers\\TestController"
+    ]
+}
