@@ -13,6 +13,9 @@ class Loader
         $symbol = '\\' . $symbol;
         $namespace = \substr($symbol, 0, \strrpos($symbol, '\\'));
 
+        // @todo The below code does not work well if the class/interface/trait/enum begins with the namespace replace
+        //       e.g \App\Application > lication
+
         do {
             if(\array_key_exists($namespace, self::$imports)) {
                 $cwd = self::$imports[$namespace];

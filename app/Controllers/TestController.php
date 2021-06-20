@@ -36,6 +36,21 @@ class TestController extends BaseController
         ];
     }
 
+    private static function getBrightColors(): array
+    {
+        return [
+            Color::BRIGHT_BLACK,
+            Color::BRIGHT_RED,
+            Color::BRIGHT_GREEN,
+            Color::BRIGHT_YELLOW,
+            Color::BRIGHT_BLUE,
+            Color::BRIGHT_MAGENTA,
+            Color::BRIGHT_CYAN,
+            Color::BRIGHT_WHITE,
+            Color::DEFAULT,
+        ];
+    }
+
     private static function getRandomColor(): Color
     {
         $colors = self::getColors();
@@ -126,6 +141,26 @@ class TestController extends BaseController
             Color::WHITE,
             Color::BLUE,
         );
+    }
+
+    #[Command(name: 'bright')]
+    public function brightTest(): void
+    {
+        foreach ([self::getColors(), self::getBrightColors()] as $colors) {
+            foreach ($colors as $textColor) {
+                foreach ($colors as $backgroundColor) {
+                    $this->stdout->write(
+                        text: 'PHP',
+                        color: $textColor,
+                        backgroundColor: $backgroundColor,
+                    );
+
+                    $this->stdout->write(' ');
+                }
+
+                $this->stdout->writeEol();
+            }
+        }
     }
 
     public function __invoke(float|null $v1, int $v2 = 2, string $v3 = null, float $v4 = 1.234): void

@@ -42,7 +42,7 @@ class Router
 
             $returnType = $method->getReturnType()?->getName();
 
-            if ($returnType === null || $returnType !== 'void') {
+            if ($returnType === null || $returnType !== 'void' || $method->returnsReference()) {
                 throw new RouterException(
                     'Cannot mount controller action [%s::%s]: Method must have a "void" return type',
                     $controller,
@@ -53,6 +53,12 @@ class Router
             if ($method->isVariadic()) {
                 throw new RouterException(
                     'Cannot mount controller action [%s::%s]: Method has one or more variadic parameters; none allowed',
+                    $controller,
+                    $method->getName(),
+                );
+            } elseif ($method->isStatic()) {
+                throw new RouterException(
+                    'Cannot mount controller action [%s::%s]: Method must not be static',
                     $controller,
                     $method->getName(),
                 );
@@ -130,7 +136,8 @@ class Router
                 continue;
             }
 
-            // @todo Support camelCase expanding commands: $withArg => --with-arg
+            // @todo Support camelCase expanding commands: $myName => --my-name
+            // @todo Support --with and --without for boolean commands
 
             $this->registerAction(
                 $group,
