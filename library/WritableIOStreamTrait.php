@@ -16,13 +16,11 @@ namespace Cli;
  */
 trait WritableIOStreamTrait
 {
-    public function write(string $text, Color $color = Color::DEFAULT, Color $backgroundColor = Color::DEFAULT): int
+    public function write(string|\Stringable $text): int
     {
         $bytes = @\fwrite(
             $this->getStream(),
-            $backgroundColor->background(
-                $color->text($text),
-            ),
+            (string) $text,
         );
 
         return $bytes ?: 0;
@@ -35,9 +33,9 @@ trait WritableIOStreamTrait
         );
     }
 
-    public function writeLine(string $text, Color $color = Color::DEFAULT, Color $backgroundColor = Color::DEFAULT): int
+    public function writeLine(string|\Stringable $text): int
     {
-        return $this->write($text, $color, $backgroundColor) + $this->writeEol();
+        return $this->write($text) + $this->writeEol();
     }
 
     public function writeLineF(string $format, mixed ...$args): int
@@ -47,12 +45,12 @@ trait WritableIOStreamTrait
         );
     }
 
-    public function writeLines(array $lines, Color $color = Color::DEFAULT, Color $backgroundColor = Color::DEFAULT): int
+    public function writeLines(array $lines): int
     {
         $bytes = 0;
 
         foreach ($lines as $line) {
-            $bytes += $this->writeLine($line, $color, $backgroundColor);
+            $bytes += $this->writeLine($line);
         }
 
         return $bytes;
@@ -77,7 +75,7 @@ trait WritableIOStreamTrait
         foreach ($text as $line) {
             $line = $this->padText($line);
 
-            foreach (\explode(\PHP_EOL, $this->wordwrap($line)) as $wrCliedLine) {
+            foreach (\explode($this->getEol(), $this->wordwrap($line)) as $wrCliedLine) {
                 if (\strlen($wrCliedLine) < $this->getLineLength()) {
                     $wrCliedLine .= \str_repeat(' ', $this->getLineLength() - \strlen($wrCliedLine));
                 }
@@ -114,7 +112,7 @@ trait WritableIOStreamTrait
     public function writeEol(int $times = 1): int
     {
         return $this->write(
-            \str_repeat(\PHP_EOL, $times),
+            \str_repeat($this->getEol(), $times),
         );
     }
 

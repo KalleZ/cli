@@ -68,9 +68,11 @@ class TestController extends BaseController
         foreach ($colors as $textColor) {
             foreach ($colors as $backgroundColor) {
                 $this->stdout->write(
-                    text: $text,
-                    color: $textColor,
-                    backgroundColor: $backgroundColor,
+                    new Text(
+                        text: $text,
+                        color: $textColor,
+                        backgroundColor: $backgroundColor,
+                    ),
                 );
 
                 $this->stdout->write(' ');
@@ -151,9 +153,11 @@ class TestController extends BaseController
             foreach ($colors as $textColor) {
                 foreach ($colors as $backgroundColor) {
                     $this->stdout->write(
-                        text: 'PHP',
-                        color: $textColor,
-                        backgroundColor: $backgroundColor,
+                        new Text(
+                            text: 'PHP',
+                            color: $textColor,
+                            backgroundColor: $backgroundColor,
+                        ),
                     );
 
                     $this->stdout->write(' ');

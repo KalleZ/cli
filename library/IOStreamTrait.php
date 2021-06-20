@@ -53,8 +53,8 @@ trait IOStreamTrait
     {
         return \wordwrap(
             $text,
-            $this->lineLength,
-            \PHP_EOL,
+            $this->getLineLength(),
+            $this->getEol(),
             true,
         );
     }
@@ -62,11 +62,11 @@ trait IOStreamTrait
     public function padText(string $text, bool $front = true, bool $back = true): string
     {
         if ($front) {
-            $text = \str_repeat(' ', $this->paddingLength) . $text;
+            $text = \str_repeat(' ', $this->getPaddingLength()) . $text;
         }
 
         if ($back) {
-            $text .= \str_repeat(' ' , $this->paddingLength);
+            $text .= \str_repeat(' ' , $this->getPaddingLength());
         }
 
         return $text;

@@ -9,11 +9,11 @@ use Cli\Cursor;
 
 interface WritableIOStream
 {
-    public function write(string $text, Color $color = Color::DEFAULT, Color $backgroundColor = Color::DEFAULT): int;
+    public function write(string|\Stringable $text): int;
     public function writeF(string $format, mixed ...$args): int;
-    public function writeLine(string $text, Color $color = Color::DEFAULT, Color $backgroundColor = Color::DEFAULT): int;
+    public function writeLine(string|\Stringable $text): int;
     public function writeLineF(string $format, mixed ...$args): int;
-    public function writeLines(array $lines, Color $color = Color::DEFAULT, Color $backgroundColor = Color::DEFAULT): int;
+    public function writeLines(array $lines): int;
 
     public function writeBox(string|array $text, Color $color, Color $backgroundColor): int;
     public function writeSuccessBox(string|array $text): int;
