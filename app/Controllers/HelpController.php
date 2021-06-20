@@ -166,6 +166,10 @@ class HelpController extends BaseController
                 $default = $parameter->getDefaultValue();
 
                 if ($default !== null) {
+                    if (\is_bool($default)) {
+                        $default = $default ? 'true' : 'false';
+                    }
+
                     $default = \sprintf(
                         ' [Default: %s]',
                         $default,
