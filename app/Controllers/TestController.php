@@ -185,6 +185,39 @@ class TestController extends BaseController
         }
     }
 
+    private function scrollFillerLines(int $lines): void
+    {
+        $filler = '|' . \str_repeat('---', 30) . '|';
+
+        for ($i = 1; $lines >= $i; $i++) {
+            $this->stdout->writeLineF(
+                '%s Line %d',
+                $filler,
+                $i,
+            );
+        }
+    }
+
+    #[Command('scroll')]
+    public function scrollTest(int $lines = 50): void
+    {
+        $this->scrollFillerLines($lines);
+        $this->stdout->writeLine('Pushing 20 lines...');
+
+        \sleep(2);
+
+        $this->stdout->scrollUp(20);
+
+        \sleep(2);
+
+        $this->scrollFillerLines($lines);
+        $this->stdout->writeLine('Reversing 20 lines...');
+
+        \sleep(2);
+
+        $this->stdout->scrollDown(20);
+    }
+
     public function __invoke(float|null $v1, int $v2 = 2, string $v3 = null, float $v4 = 1.234): void
     {
         echo 'phpfi', PHP_EOL;

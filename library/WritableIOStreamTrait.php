@@ -28,9 +28,23 @@ trait WritableIOStreamTrait
         return $bytes ?: 0;
     }
 
+    public function writeF(string $format, mixed ...$args): int
+    {
+        return $this->write(
+            \sprintf(...\func_get_args()),
+        );
+    }
+
     public function writeLine(string $text, Color $color = Color::DEFAULT, Color $backgroundColor = Color::DEFAULT): int
     {
         return $this->write($text, $color, $backgroundColor) + $this->writeEol();
+    }
+
+    public function writeLineF(string $format, mixed ...$args): int
+    {
+        return $this->writeLine(
+            \sprintf(...\func_get_args()),
+        );
     }
 
     public function writeLines(array $lines, Color $color = Color::DEFAULT, Color $backgroundColor = Color::DEFAULT): int
@@ -109,5 +123,15 @@ trait WritableIOStreamTrait
         foreach ($cursors as $cursor) {
             $this->write($cursor->sequence());
         }
+    }
+
+    public function scrollUp(int $lines): void
+    {
+        $this->write("\033[{$lines}S");
+    }
+
+    public function scrollDown(int $lines): void
+    {
+        $this->write("\033[{$lines}T");
     }
 }

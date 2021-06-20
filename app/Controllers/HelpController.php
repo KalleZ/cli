@@ -39,6 +39,8 @@ class HelpController extends BaseController
             }
         }
 
+        \ksort($list);
+
         if ($explain !== null) {
             $explain = \strtolower($explain);
             $route = $this->getDi()->get(Router::class)->getRoute($explain);
