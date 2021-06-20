@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Cli\Contracts;
 
 use Cli\Color;
+use Cli\Cursor;
 
 interface WritableIOStream
 {
@@ -18,4 +19,6 @@ interface WritableIOStream
 
     public function writeEol(int $times = 1): int;
     public function getEol(): string;
+
+    public function cursor(Cursor ...$cursors): void;
 }

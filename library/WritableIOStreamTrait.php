@@ -103,4 +103,11 @@ trait WritableIOStreamTrait
             \str_repeat(\PHP_EOL, $times),
         );
     }
+
+    public function cursor(Cursor ...$cursors): void
+    {
+        foreach ($cursors as $cursor) {
+            $this->write($cursor->sequence());
+        }
+    }
 }

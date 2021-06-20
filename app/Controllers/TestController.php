@@ -9,6 +9,7 @@ use Cli\Attributes\Command;
 use Cli\Attributes\Help;
 use Cli\BaseController;
 use Cli\Color;
+use Cli\Cursor;
 use Cli\Text;
 
 #[Controller(group: 'test')]
@@ -160,6 +161,27 @@ class TestController extends BaseController
 
                 $this->stdout->writeEol();
             }
+        }
+    }
+
+    #[Command(name: 'cursor')]
+    public function cursorTest(int $sleepTimer = 3): void
+    {
+        $commands = [
+            'Cursor stop blinking' => Cursor::STOP_BLINK,
+            'Cursor start blinking' => Cursor::START_BLINK,
+            'Cursor hide' => Cursor::HIDE,
+            'Cursor show' => Cursor::SHOW,
+            'Cursor underline' => Cursor::UNDERLINE,
+            'Cursor beam' => Cursor::BEAM,
+            'Cursor block' => Cursor::BLOCK,
+        ];
+
+        foreach ($commands as $label => $cursor) {
+            $this->stdout->writeLine($label);
+            $this->stdout->cursor($cursor);
+
+            \sleep($sleepTimer);
         }
     }
 
