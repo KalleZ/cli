@@ -223,6 +223,7 @@ class TestController extends BaseController
     }
 
     #[Command(name: 'typewriter')]
+    #[Help(text: 'This is a typewriter test')]
     public function typeWriter(bool $bytesMode = false): void
     {
         $text = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur condimentum vestibulum dapibus. ';
@@ -259,6 +260,30 @@ class TestController extends BaseController
 
         $this->stdout->writeEol(2);
         $this->stdout->writeLineF('Wrote %d %s', $counter, $type);
+    }
+
+    #[Command(name: 'askAgain')]
+    public function askAgain(): void
+    {
+        $color = Color::GREEN;
+
+        if ($this->stdin->askYesNo('Would you like bright mode?')) {
+            $color = Color::BRIGHT_GREEN;
+        }
+
+        if ($this->stdin->askYesNo('Would you like this to be an error?')) {
+            if ($color === Color::GREEN) {
+                $color = Color::RED;
+            } else {
+                $color = Color::BRIGHT_RED;
+            }
+        }
+
+        $this->stdout->writeBox(
+            text: 'This is the text of the box',
+            color: Color::WHITE,
+            backgroundColor: $color,
+        );
     }
 
     public function __invoke(float|null $v1, int $v2 = 2, string $v3 = null, float $v4 = 1.234): void
