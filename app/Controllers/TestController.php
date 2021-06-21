@@ -223,24 +223,42 @@ class TestController extends BaseController
     }
 
     #[Command(name: 'typewriter')]
-    public function typeWriter(string $text, bool $bytesMode = false): void
+    public function typeWriter(bool $bytesMode = false): void
     {
+        $text = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur condimentum vestibulum dapibus. ';
+        $text .= 'Curabitur gravida lacinia dolor sit amet tristique. Donec at neque at nunc vehicula tincidunt at ';
+        $text .= 'eget ipsum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam sollicitudin lacus a ';
+        $text .= 'nibh vehicula, eget egestas turpis venenatis. Nunc gravida eros suscipit nulla mattis fringilla. ';
+        $text .= 'Pellentesque eu condimentum magna, a ullamcorper urna. Sed vitae quam sit amet ipsum rhoncus ';
+        $text .= 'lacinia ut sed magna.';
+
+        $this->stdout->setLineLength(64);
+        $text = $this->stdout->wordwrap($text);
+
         $this->stdout->cursor(Cursor::BLINK);
         \usleep(750000);
+
+        $counter = 0;
+        $type = $bytesMode ? 'characters' : 'words';
 
         if ($bytesMode) {
             foreach (\str_split($text) as $char) {
                 $this->stdout->write($char);
                 \usleep(50000);
+
+                $counter++;
             }
         } else {
             foreach (\str_word_count($text, 1) as $word) {
                 $this->stdout->write($word . ' ');
                 \usleep(750000);
+
+                $counter++;
             }
         }
 
-        $this->stdout->writeEol();
+        $this->stdout->writeEol(2);
+        $this->stdout->writeLineF('Wrote %d %s', $counter, $type);
     }
 
     public function __invoke(float|null $v1, int $v2 = 2, string $v3 = null, float $v4 = 1.234): void
