@@ -31,12 +31,12 @@ class Loader
         if (\PHP_OS_FAMILY !== 'Windows') {
             $filename = \str_replace(
                 [
-                    '\\',
                     $namespace,
+                    '\\',
                 ],
                 [
-                    '/',
                     '',
+                    '/',
                 ],
                 $symbol,
             );
