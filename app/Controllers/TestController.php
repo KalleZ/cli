@@ -222,6 +222,27 @@ class TestController extends BaseController
         $this->stdout->scrollDown(20);
     }
 
+    #[Command(name: 'typewriter')]
+    public function typeWriter(string $text, bool $bytesMode = false): void
+    {
+        $this->stdout->cursor(Cursor::BLINK);
+        \usleep(750000);
+
+        if ($bytesMode) {
+            foreach (\str_split($text) as $char) {
+                $this->stdout->write($char);
+                \usleep(50000);
+            }
+        } else {
+            foreach (\str_word_count($text, 1) as $word) {
+                $this->stdout->write($word . ' ');
+                \usleep(750000);
+            }
+        }
+
+        $this->stdout->writeEol();
+    }
+
     public function __invoke(float|null $v1, int $v2 = 2, string $v3 = null, float $v4 = 1.234): void
     {
         echo 'phpfi', PHP_EOL;

@@ -48,6 +48,8 @@ class Dispatcher
 
                 if (!$type->allowsNull()) {
                     if ($type->getName() === 'bool') {
+                        // @todo This conversion is not super good, as `false` will end up as bool(true)
+
                         $value = $value === null ? true : (bool) $value;
                     } elseif ($value === null && $parameter->getDefaultValue()) {
                         $value = $parameter->getDefaultValue();
