@@ -75,13 +75,13 @@ trait WritableIOStreamTrait
         foreach ($text as $line) {
             $line = $this->padText($line);
 
-            foreach (\explode($this->getEol(), $this->wordwrap($line)) as $wrCliedLine) {
-                if (\strlen($wrCliedLine) < $this->getLineLength()) {
-                    $wrCliedLine .= \str_repeat(' ', $this->getLineLength() - \strlen($wrCliedLine));
+            foreach (\explode($this->getEol(), $this->wordwrap($line)) as $wrappedLine) {
+                if (\strlen($wrappedLine) < $this->getLineLength()) {
+                    $wrappedLine .= \str_repeat(' ', $this->getLineLength() - \strlen($wrappedLine));
                 }
 
                 $lines[] = $backgroundColor->background(
-                    $color->text($wrCliedLine),
+                    $color->text($wrappedLine),
                 );
             }
         }
